@@ -2,10 +2,16 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# Load datasets
-ratings = pd.read_csv("processed_ratings.csv")
-top_movies = pd.read_csv("top_movies.csv")
-user_freq = pd.read_csv("user_frequency.csv")
+DATA_URL = 'https://github.com/Agnieszka-Kamieniksba23169/Dashboard_CA2/blob/main/movies_updated.csv'
+
+@st.cache_data
+def load_data():
+    df = pd.read_csv(DATA_URL)
+    return df
+
+df = load_data()
+st.dataframe(df.head())
+
 
 # Page Config
 st.set_page_config(page_title="Youth Movie Rating Dashboard", layout="wide")
@@ -22,7 +28,7 @@ col3.metric("Movies Rated", f"{ratings['movieId'].nunique():,}")
 st.markdown("---")
 
 # Top Movies by Rating Count
-st.subheader("🔥 Top 10 Most Rated Movies")
+st.subheader("Top 10 Most Rated Movies")
 fig_top_movies = px.bar(top_movies, x='movieId', y='count',
                         hover_data=['mean'], labels={'count': 'Number of Ratings'},
                         color='mean', title="Top Rated Movies by Number of Ratings")
