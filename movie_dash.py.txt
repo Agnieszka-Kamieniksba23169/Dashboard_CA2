@@ -35,7 +35,7 @@ fig_top_movies = px.bar(top_movies, x='movieId', y='count',
 st.plotly_chart(fig_top_movies, use_container_width=True)
 
 # Rating Activity Over Time
-st.subheader("🕒 Rating Activity Over Time")
+st.subheader("Rating Activity Over Time")
 activity = ratings.groupby('hour')['rating'].count().reset_index()
 fig_activity = px.line(activity, x='hour', y='rating', markers=True,
                        title="Ratings by Hour of Day", labels={'rating': 'Number of Ratings'})
