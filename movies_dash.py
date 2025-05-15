@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
+import numpy as np
 
 DATA_URL = 'https://github.com/Agnieszka-Kamieniksba23169/Dashboard_CA2/blob/main/movies_updated.csv'
 
