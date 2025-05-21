@@ -26,9 +26,6 @@ def load_movie_df():
 
 movie_df = load_movie_df()
 
-# Page config
-st.set_page_config(page_title="Movie Ratings Dashboard", layout="wide")
-
 # Title
 st.title("🎬 Movie Ratings Dashboard")
 st.markdown("**Explore rating trends, genre preferences, and user engagement — powered by data & perfect for Machine Learning**")
