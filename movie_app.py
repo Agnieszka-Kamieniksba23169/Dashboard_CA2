@@ -1,13 +1,30 @@
 
-import requests
-from io import StringIO
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from collections import Counter
-import matplotlib.pyplot as plt
 import seaborn as sns
+import requests                          # ✅ import requests
+from io import StringIO                  # ✅ import StringIO
+
+# Page config
+st.set_page_config(page_title="Movie Ratings Dashboard", layout="wide")
+
+# Load data from GitHub
+@st.cache_data
+def load_movie_df():
+    url = 'https://raw.githubusercontent.com/Agnieszka-Kamieniksba23169/Dashboard_CA2/main/movie_df.csv'
+    response = requests.get(url)
+    if response.status_code == 200:
+        return pd.read_csv(StringIO(response.text))
+    else:
+        st.error("Failed to load movies data.")
+        return None
+
+movie_df = load_movie_df()
 
 # Page config
 st.set_page_config(page_title="Movie Ratings Dashboard", layout="wide")
