@@ -74,6 +74,18 @@ with tab1:
                   color='rating', color_continuous_scale='Turbo')
     st.plotly_chart(fig3, use_container_width=True)
 
+    st.subheader("🎭 Genre Popularity")
+    genre_exploded = filtered_df['genres'].dropna().str.split('|').explode()
+    genre_counts = genre_exploded.value_counts().head(10).reset_index()
+    genre_counts.columns = ['genre', 'count']
+    fig4, ax4 = plt.subplots()
+    sns.barplot(data=genre_counts, x='genre', y='count', ax=ax4, palette="crest")
+    ax4.set_title("Most Watched Genres")
+    ax4.set_xlabel("Genre")
+    ax4.set_ylabel("View Count")
+    ax4.tick_params(axis='x', rotation=45)
+    st.pyplot(fig4)
+
 # ---------- Tab 2: Time Trends ----------
 with tab2:
     st.subheader("📅 Ratings Over Time (Monthly)")
