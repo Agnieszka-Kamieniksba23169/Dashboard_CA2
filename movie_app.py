@@ -1,5 +1,3 @@
-
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -7,45 +5,34 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from collections import Counter
 import seaborn as sns
-import requests                          # ✅ import requests
-from io import StringIO                  # ✅ import StringIO
+import requests
+from io import StringIO
 
-# Page config
+# Set page config 
 st.set_page_config(page_title="Movie Ratings Dashboard", layout="wide")
 
-# Load data from GitHub
+# Load data 
 @st.cache_data
 def load_movie_df():
     url = 'https://raw.githubusercontent.com/Agnieszka-Kamieniksba23169/Dashboard_CA2/main/movie_df.csv'
     response = requests.get(url)
     if response.status_code == 200:
-        return pd.read_csv(StringIO(response.text))
+        df = pd.read_csv(StringIO(response.text))
+        df['primary_genre'] = df['genres'].apply(lambda x: x.split('|')[0])
+        df['date'] = pd.to_datetime(df[['year', 'month', 'day']])
+        return df
     else:
-        st.error("Failed to load movies data.")
         return None
 
-movie_df = load_movie_df()
+# Load the dataset
+df = load_movie_df()
+if df is None:
+    st.error("❌ Failed to load movie data.")
+    st.stop()
 
-# Title
+# ✅ App Title
 st.title("🎬 Movie Ratings Dashboard")
 st.markdown("**Explore rating trends, genre preferences, and user engagement — powered by data & perfect for Machine Learning**")
-
-# Load data
-
-@st.cache_data
-def load_movie_df():
-    url = 'https://raw.githubusercontent.com/Agnieszka-Kamieniksba23169/Dashboard_CA2/refs/heads/main/movie_df.csv'
-    response = requests.get(url)
-    if response.status_code == 200:
-        return pd.read_csv(StringIO(response.text))
-    else:
-        st.error("Failed to load movies data.")
-        return None
-
-
-# Call the data loader and assign to movie_df
-movie_df = load_movie_df()
-
 
 # Sidebar filters
 st.sidebar.header("🔍 Filters")
