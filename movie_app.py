@@ -121,8 +121,10 @@ with tab3:
     user_activity.columns = ['userId', 'rating_count']
     fig6 = px.histogram(user_activity, x='rating_count', nbins=50,
                         color_discrete_sequence=['#00CC96'])
-    fig6.update_layout(xaxis_title='Ratings per User', yaxis_title='Number of Users')
+    fig6.update_layout(bargap=0.2,xaxis_title='Ratings per User', yaxis_title='Number of Users')
     st.plotly_chart(fig6, use_container_width=True)
+
+
 
 # ---------- Tab 4: Advanced Insights ----------
 with tab4:
