@@ -56,9 +56,25 @@ with tab1:
     fig1.update_layout(yaxis={'categoryorder':'total ascending'})
     st.plotly_chart(fig1, use_container_width=True)
 
-    st.subheader("Ratings Distribution")
-    fig2 = px.histogram(df, x='rating', nbins=9, color_discrete_sequence=['#636EFA'])
-    st.plotly_chart(fig2, use_container_width=True)
+  st.subheader("Ratings Distribution")
+fig2 = px.histogram(
+    df,
+    x='rating',
+    nbins=20,  # More bins = smoother distribution
+    title='Distribution of Ratings',
+    labels={'rating': 'Rating Value'},
+    color_discrete_sequence=['#636EFA']
+)
+
+# Add spacing between bars
+fig2.update_layout(
+    bargap=0.2,
+    xaxis_title='Rating',
+    yaxis_title='Number of Ratings',
+    title_x=0.5  # Center the title
+)
+
+st.plotly_chart(fig2, use_container_width=True)
 
     st.subheader("Average Rating by Primary Genre")
     genre_ratings = df.groupby('primary_genre')['rating'].mean().sort_values(ascending=False).reset_index()
